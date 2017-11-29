@@ -8,13 +8,18 @@
 * */
 
 var mysql=require("mysql");
-var pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'my_db',
-    port: '3306'
-});
+var dbconfig = require('./db.config.js');
+
+var pool = mysql.createPool(
+    dbconfig.dev
+    //{
+    //    host: 'localhost',
+    //    user: 'root',
+    //    password: '',
+    //    database: 'my_db',
+    //    port: '3306'
+    //}
+);
 
 var db=function(sql,options,callback){
     pool.getConnection(function(err,conn){
@@ -24,8 +29,9 @@ var db=function(sql,options,callback){
             conn.query(sql,options,function(err,results,fields){
                 //释放连接
                 conn.release();
+                if(err) throw err;
                 //事件驱动回调
-                callback(err,results,fields);
+                callback(results,fields);
             });
         }
     });

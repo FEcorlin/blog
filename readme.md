@@ -53,7 +53,7 @@ connection.query(addSql,addSqlParams,function (err, result) {
        console.log('INSERT ID:',result);        
        console.log('-----------------------------------------------------------------\n\n');  
 });
-//更新数据
+//更新数据UPDATE Person SET FirstName = 'Fred' WHERE LastName = 'Wilson' 
 var modSql = 'UPDATE websites SET name = ?,url = ? WHERE Id = ?';
 var modSqlParams = ['菜鸟移动站', 'https://m.runoob.com',6];
 //改

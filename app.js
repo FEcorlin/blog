@@ -3,11 +3,14 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');//session模块
+
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var articles = require('./routes/articles');
 
 var app = express();
 
@@ -21,11 +24,16 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret:parseInt(Math.random()*10000).toString(), //secret的值建议使用随机字符串
+  cookie: {maxAge: 60 * 1000 * 30} // 过期时间（毫秒）
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
 app.use('/api', api);
+app.use('/articles', articles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

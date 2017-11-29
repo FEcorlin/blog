@@ -6,14 +6,33 @@
 </head>
 <body>
 <h1>view</h1>
+<buttton onclick="login()">登录</buttton>
 <script>
     var xhr = new XMLHttpRequest();
-    xhr.open('POST','/api');
-    xhr.send(JSON.stringify({
-        username:'chenjun1',
-        password:'11'
-    }));
-    xhr.onreadystatechange= function (res) {
+    xhr.open('POST','/articles/save');
+    xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+    var text = 's卡萨丁sld<img src="aksdjasldj.com" /> <div class="sldj"></div>a dsfas实打实发的';
+
+    var data ="title=无标题文章&content="+text+"&id=110&text_num=6";
+    xhr.send(data);
+    xhr.onreadystatechange= function () {
+        if(xhr.readyState== 4 && xhr.status==200){
+//            alert(JSON.parse(xhr.responseText).info);
+        }
+    }
+    function login(){
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST','/users/login');
+        xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+        xhr.send("mobile=13708392523&password=0000000");
+        xhr.onreadystatechange= function () {
+            if(xhr.readyState== 4 && xhr.status==200){
+//            alert(JSON.parse(xhr.responseText).info);
+                if(JSON.parse(xhr.responseText).ok == 0){
+//                    alert(JSON.parse(xhr.responseText).info);
+                }
+            }
+        }
     }
 </script>
 </body>
