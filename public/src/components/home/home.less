@@ -1,0 +1,113 @@
+.articles_wrap{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  .item_article{
+    position: relative;
+    width: 100%;
+    margin: 0 0 17px;
+    padding: 0 2px 17px 0;
+    border-bottom: 1px solid #f0f0f0;
+    word-wrap: break-word;
+    .wrap-img{
+      position: absolute;
+      top: 50%;
+      margin-top: -68px;
+      right: 0;
+      width: 150px;
+      height: 120px;
+      img{
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        border: 1px solid #f0f0f0;
+      }
+    }
+    .content{
+      margin-top: 30px;
+      .author{
+        margin-bottom: 14px;
+        font-size: 13px;
+        .avatar{
+          img{
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 5px 0 0;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            color: #333;
+            overflow: hidden;
+            -webkit-border-radius: 100%;
+            -moz-border-radius: 100%;
+            border-radius: 100%;
+          }
+        }
+        .name{
+          display: inline-block;
+          vertical-align: middle;
+          .blue_link{
+            color: #333;
+            cursor: pointer;
+          }
+          .time{
+            display: inline-block;
+            padding-left: 3px;
+            color: #969696;
+          }
+        }
+      }
+      .title{
+        margin: -7px 0 4px;
+        display: inherit;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.5;
+        color: #969696;
+      }
+      .abstract{
+        margin: 0 0 8px;
+        font-size: 13px;
+        line-height: 24px;
+        margin-bottom: 10px;
+      }
+      .meta{
+          padding-right: 0!important;
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 20px;
+        .collection_tag{
+          padding: 2px 6px;
+          color: #ea6f5a!important;
+          border: 1px solid rgba(236,97,73,.7);
+          -webkit-border-radius: 3px;
+          -moz-border-radius: 3px;
+          border-radius: 3px;
+          -webkit-transition: .1s ease in;
+          -moz-transition: .1s ease in;
+          -ms-transition: .1s ease in;
+          -o-transition: .1s ease in;
+          transition: .1s ease in;
+        }
+        a{
+          margin-right: 10px;
+          color: #b4b4b4;
+        }
+        i{
+          margin-right: 5px;
+          font-size: 14px;
+        }
+        span{
+          margin-right: 10px;
+          color: #b4b4b4;
+        }
+      }
+    }
+  }
+  .have_img{
+    min-height: 140px;
+    .content{
+      padding-right: 160px!important;
+    }
+  }
+}
