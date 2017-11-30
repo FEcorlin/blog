@@ -30,13 +30,13 @@ export default class Header extends Component{
 						<button className="fa fa-search"></button>
 					</form>
 				</div>
-				<a class="write_btn" target="_blank" href="">
-					<i class="fa fa-leaf"></i>写文章
+				<a className="write_btn" target="_blank" href="">
+					<i className="fa fa-leaf"></i>写文章
 				</a>
-				<a class="login_btn" target="_blank" href="">
+				<a className="login_btn" target="_blank" href="">
 					登录
 				</a>
-				<a class="regist_btn" target="_blank" href="">
+				<a className="regist_btn" target="_blank" href="">
 					注册
 				</a>
 			</div>

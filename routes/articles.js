@@ -20,7 +20,28 @@ router.get('/lists', function (req, res, next) {
     var page = req.query.page || 1;
     var pageSize = req.query.pageSize || 10;
     getArticlePager(page, pageSize, function (results) {
-        res.json(results);
+        for(var i = 0,len = results.length; i < len; i++){
+           var mark = 0;
+            console.log(results[i]);
+           db('select * from user where id=?',[results[i].id], function (_res, fields) {
+                results[i].info={
+                    id:_res.id,
+                    name:_res.name,
+                    avatar:_res.avatar,
+                }
+               mark++;
+               if(i+1==results.length && mark == 2){
+                    res.json(results);
+               }
+           });
+            db('select * from user_cat where id=?',[results[i].cat_id], function (_res, fields) {
+                results[i].cat_name=_res.name;
+                mark++;
+                if(i+1==len && mark == 2){
+                    res.json(results);
+                }
+            })
+        }
     });
 });
 

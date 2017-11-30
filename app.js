@@ -18,6 +18,15 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+//CORS middleware
+var allowCrossDomain = function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+}
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -28,6 +37,7 @@ app.use(session({
   secret:parseInt(Math.random()*10000).toString(), //secret的值建议使用随机字符串
   cookie: {maxAge: 60 * 1000 * 30} // 过期时间（毫秒）
 }));
+app.use(allowCrossDomain);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);

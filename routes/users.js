@@ -100,16 +100,15 @@ router.post('/registe', function (req, res, next) {
 
 });
 
-var serialize = function(name,val,opt){
-    var pairs = [name + '=' +encodeURIComponent(val)];
-    opt = opt || {};
-    if(opt.maxAge) 　pairs.push('Max-Age=' + opt.maxAge);
-    if(opt.domin) 　pairs.push('Domin=' + opt.domin);
-    if(opt.path) 　pairs.push('Path=' + opt.path);
-    if(opt.expires) 　pairs.push('Expires=' + opt.expires.toUTCString());
-    if(opt.httpOnly) 　pairs.push('HttpOnly');
-    if(opt.secure) 　pairs.push('Secure');
-    return pairs.join(';');
-}
+//获取用户信息
+router.get('/info', function (req, res, next) {
+    var id = req.query.id;
+    if(id < 1 || !id){
+        res.json({ok:0,info:'查询用户为空'});
+    }
+    db("select * from user where id=?",[id], function (results, fields) {
+       res.json(results[0]);
+    });
+});
 
 module.exports = router;
