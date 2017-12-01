@@ -10,7 +10,7 @@ export default class Header extends Component{
 		return (
 			<div className="head_wrap">
 				<a className="logo">
-					<img alt="NOTE" src="//cdn2.jianshu.io/assets/web/logo-58fd04f6f0de908401aa561cda6a0688.png" />
+					<img alt="NOTE" src="" />
 				</a>
 				<div className="container">
 					<a href="" className="menu active">

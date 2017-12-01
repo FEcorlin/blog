@@ -19,29 +19,53 @@ router.get('/', function (req, res, next) {
 router.get('/lists', function (req, res, next) {
     var page = req.query.page || 1;
     var pageSize = req.query.pageSize || 10;
-    getArticlePager(page, pageSize, function (results) {
-        for(var i = 0,len = results.length; i < len; i++){
-           var mark = 0;
-            console.log(results[i]);
-           db('select * from user where id=?',[results[i].id], function (_res, fields) {
-                results[i].info={
-                    id:_res.id,
-                    name:_res.name,
-                    avatar:_res.avatar,
-                }
-               mark++;
-               if(i+1==results.length && mark == 2){
-                    res.json(results);
-               }
-           });
-            db('select * from user_cat where id=?',[results[i].cat_id], function (_res, fields) {
-                results[i].cat_name=_res.name;
-                mark++;
-                if(i+1==len && mark == 2){
-                    res.json(results);
-                }
-            })
+    getArticlePager(page,pageSize).then(function (lists) {
+        var user_lists = [];
+        var cat_lists = [];
+        var lists_ln = lists.length;
+        for(var i = 0; i < lists_ln; i++){
+            user_lists.push(lists[i].author_id);
+            cat_lists.push(lists[i].cat_id);
         }
+        user_lists = user_lists.join(',');
+        cat_lists = cat_lists.join(',');
+        new Promise(function (resolve, reject) {
+           db("select * from user where id in (?)",[user_lists], function (users, fields) {
+               resolve(users);
+           });
+        }).then(function (users) {
+            for(var n = 0; n < lists_ln; n++){
+                lists[n].userinfo = {
+                            name:"失效用户",
+                            avatar:"失效用户",
+                        }
+                        for(var j = 0,ln = users.length; j < ln; j++){
+                            if(lists[n].author_id == users[j].id){
+                                lists[n].userinfo = {
+                                    name:users[j].name,
+                                    avatar:users[j].avatar,
+                                }
+                                break;
+                    }
+                }
+            }
+            new Promise(function (resolve, reject) {
+                db('select * from user_cat where id in (?)',[cat_lists], function (cats, fields) {
+                   resolve(cats);
+                });
+            }).then(function (cats) {
+                for(var n = 0; n < lists_ln; n++){
+                    lists[n].cat_name = '分类已失效';
+                    for(var j = 0,ln = cats.length; j < ln; j++){
+                        if(lists[n].cat_id == cats[j].id){
+                            lists[n].cat_name = cats[j].name;
+                            break;
+                        }
+                    }
+                }
+                res.json(lists);
+            });
+        });
     });
 });
 
@@ -119,12 +143,17 @@ router.post('/delete', function (req, res, next) {
 
 
 //分页查询方法
-function getArticlePager(currentPage, pageSize, func) {
-    if (currentPage <= 0 || !currentPage) currentPage = 1;
-    var start = (currentPage - 1) * pageSize;
-    var end = start + pageSize;
-    db("select * from articles where is_delete=0 order by create_time desc limit ?,?", [start, end], function (results, fields) {
-        func(results);
+function getArticlePager(currentPage, pageSize) {
+    return new Promise(function (resolve, reject) {
+        if (currentPage <= 0 || !currentPage) currentPage = 1;
+        var start = (currentPage - 1) * pageSize;
+        var end = start + pageSize;
+        console.log('--------------');
+        console.log(start);
+        console.log(end);
+        db("select * from articles where is_delete=0 order by create_time desc limit ?,?", [start, end], function (results, fields) {
+            resolve(results);
+        });
     });
 }
 

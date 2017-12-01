@@ -3,27 +3,47 @@ import './home.less';
 import 'whatwg-fetch';
 import Userinfo from '../../common/Userinfo';
 import Apiconfig from '../../common/Apiconfig';
+import utl from '../../common/OwnUtils';
 
 export default class Home extends Component{
     constructor(props){
         super(props);
         this.state={
             lists:[],
+            page:1,
+            showNext:false
         };
     }
     componentWillMount(){
     }
     componentDidMount(){
-        fetch(new Apiconfig().apiUrl+'articles/lists')
+        this.getLists();
+    }
+    getLists(){
+        fetch(new Apiconfig().apiUrl+'articles/lists?page='+this.state.page)
             .then((res)=>{return res.json();})
             .then((json)=>{
-                this.setState({
-                    lists:json
-                });
+                if(json.length > 0){
+                    this.setState({
+                        lists:this.state.lists.concat(json),
+                        page:this.state.page+1,
+                        showNext:true
+                    });
+                }
+                else {
+                    this.setState({
+                        lists:this.state.lists.concat(json),
+                        showNext:false
+                    });
+                }
             })
             .catch((err)=>{console.log("请求出错："+err);});
     }
+    more_handle(){
+        this.getLists();
+    }
     render(){
+        var showNext = this.state.showNext ? "block" : "none";
         return (
             <div className="container">
                 <ul className="articles_wrap">
@@ -39,7 +59,9 @@ export default class Home extends Component{
                                             </a>
                                             <div className="name">
                                                 <a className="blue_link" target="_blank" href={list.author_id}>{list.userinfo.name}</a>
-                                                <span className="time" data-shared-at="2017-08-15T14:04:28+08:00">11-25 05:37</span>
+                                                <span className="time" data-shared-at="2017-08-15T14:04:28+08:00">
+                                                    {utl.timeFormat(list.publish_time,'m-d h:m')}
+                                                </span>
                                             </div>
                                         </div>
                                         <a className="title" target="_blank" href={list.id}>{list.title}</a>
@@ -47,20 +69,17 @@ export default class Home extends Component{
                                             {list.abstract}
                                         </div>
                                         <div className="meta">
-                                            <a className="collection_tag" target="_blank" href={list.cat_id}>日记本</a>
-                                            <a target="_blank" href="">
-                                                <i className="fa fa-eye"></i>0
-                                            </a>
-                                            <a target="_blank" href="">
-                                                <i className="fa fa-comment"></i> 0
-                                            </a>
-                                            <span><i className="fa fa-heart"></i>0</span>
+                                            <a className="collection_tag" target="_blank" href={list.cat_id}>{list.cat_name}</a>
+                                            <a target="_blank" href=""><i className="fa fa-eye"></i>{list.read_num}</a>
+                                            <a target="_blank" href=""><i className="fa fa-comment"></i> {list.comment_num}</a>
+                                            <span><i className="fa fa-heart"></i>{list.like_num}</span>
                                         </div>
                                     </div>
                                 </li>);
-                        })
+                        });
                     }
                 </ul>
+                <div className="get_more" style={{display:showNext}} onClick={this.more_handle.bind(this)}>查看更多</div>
             </div>
         );
     }
