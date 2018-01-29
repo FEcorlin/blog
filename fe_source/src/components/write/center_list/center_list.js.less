@@ -1,0 +1,166 @@
+.float_wrap{
+  z-index: 999;
+  position: fixed;
+  left:0;
+  right:0;
+  top:0;
+  bottom:0;
+  display: none;
+}
+.new-note-link {
+  display: block;
+  padding: 20px 0 20px 25px;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+}
+.notes_list {
+  padding: 0;
+  margin:0;
+  margin-bottom: 0;
+  list-style: none;
+  i{
+    margin-right: 5px!important;
+  }
+  li{
+    position: relative;
+    max-height: 90px;
+    height: 90px;
+    border-top: 1px solid #dcdcdc;
+    background-color: transparent;
+    border-left: 5px solid transparent!important;
+    display: block;
+    .icon-note {
+      position: absolute;
+      top: 30px;
+      left: 20px;
+      display: inline-block;
+      color: #bebebe;
+      font-size: 24px;
+    }
+    .title {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 15px 30px 15px 60px;
+      margin: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 36px;
+      background: 0 0!important;
+    }
+    .abbreviate {
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 40px;
+      max-height: 30px;
+      height: 30px;
+      margin: 0;
+      color: #555;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 36px;
+      margin:0;
+    }
+    .wordage {
+      position: absolute;
+      bottom: 0px;
+      left: 5px;
+      font-family: -apple-system,"SF UI Text",Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","WenQuanYi Micro Hei",sans-serif;
+      font-size: 9px;
+      font-weight: 400;
+      line-height: 16px;
+      color: #555;
+      margin:0;
+      padding: 0;
+    }
+    .share-note {
+      position: absolute;
+      padding: 0;
+      right: 12px;
+      top: 35px;
+      display: none;
+      font-size: 16px;
+      color: #a0a0a0!important;
+    }
+    &.active {
+      background-color: #ececec;
+      border-left: 5px solid #ec7259!important;
+      .share-note {
+        display: inline-block;
+      }
+    }
+    &.published{
+      .icon-note {
+        color: #cdbd8a!important;
+      }
+    }
+    &:hover{
+      background-color: #ececec;
+    }
+    .arrow-top {
+      left: auto;
+      right: 0;
+      overflow: inherit;
+      font-style: normal;
+      position: absolute;
+      top: 100%;
+      z-index: 1000;
+      display: none;
+      min-width: 160px;
+      padding: 5px 0;
+      margin: 2px 0 0;
+      font-size: 14px;
+      text-align: left;
+      list-style: none;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      li{
+        position: relative;
+        height: 27px;
+        line-height: 27px;
+        a{
+          display: block;
+          padding: 3px 20px;
+          clear: both;
+          font-weight: 400;
+          line-height: 1.42857143;
+          color: #333;
+          white-space: nowrap;
+          cursor: pointer;
+          &:hover{
+            text-decoration: none;
+            color: #fff;
+            background-color: #4f4f4f;
+          }
+          &.active i {
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+
+.new-note-bottom {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  &>a {
+    height: 30px;
+    display: block;
+    padding: 20px 0 20px 25px;
+    color: #999;
+  }
+}

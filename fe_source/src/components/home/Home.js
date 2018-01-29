@@ -1,9 +1,9 @@
 import React,{Component} from 'react';
 import './home.less';
 import 'whatwg-fetch';
-import Userinfo from '../../common/Userinfo';
 import Apiconfig from '../../common/Apiconfig';
 import utl from '../../common/OwnUtils';
+import {NavLink} from 'react-router-dom';
 
 export default class Home extends Component{
     constructor(props){
@@ -13,6 +13,8 @@ export default class Home extends Component{
             page:1,
             showNext:false
         };
+        this.more_handle = this.more_handle.bind(this);
+        this.getLists = this.getLists.bind(this);
     }
     componentWillMount(){
     }
@@ -43,7 +45,6 @@ export default class Home extends Component{
         this.getLists();
     }
     render(){
-        var showNext = this.state.showNext ? "block" : "none";
         return (
             <div className="container">
                 <ul className="articles_wrap">
@@ -60,11 +61,11 @@ export default class Home extends Component{
                                             <div className="name">
                                                 <a className="blue_link" target="_blank" href={list.author_id}>{list.userinfo.name}</a>
                                                 <span className="time" data-shared-at="2017-08-15T14:04:28+08:00">
-                                                    {utl.timeFormat(list.publish_time,'m-d h:m')}
+                                                    {utl.timeFormat(list.publish_time,'m-d h:s')}
                                                 </span>
                                             </div>
                                         </div>
-                                        <a className="title" target="_blank" href={list.id}>{list.title}</a>
+                                        <NavLink className="title" to={'/p/'+list.id}>{list.title}</NavLink>
                                         <div className="abstract">
                                             {list.abstract}
                                         </div>
@@ -76,10 +77,10 @@ export default class Home extends Component{
                                         </div>
                                     </div>
                                 </li>);
-                        });
+                        })
                     }
                 </ul>
-                <div className="get_more" style={{display:showNext}} onClick={this.more_handle.bind(this)}>查看更多</div>
+                <div className="get_more" style={{display:this.state.showNext ? "block" : "none"}} onClick={this.more_handle}>查看更多</div>
             </div>
         );
     }

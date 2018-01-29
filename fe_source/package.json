@@ -90,6 +90,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "antd": "^3.1.6",
     "font-awesome": "^4.7.0",
     "less": "^2.7.3",
     "less-loader": "^4.0.5",

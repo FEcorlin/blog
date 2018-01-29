@@ -1,6 +1,6 @@
 var utl = {
     timeFormat:function(time,fomal){
-        var t = new Date(parseInt(time));
+        var t = new Date(parseInt(time,10));
         var year = t.getFullYear();
         var month = t.getMonth()+1 < 10 ? '0' + (t.getMonth()+1) : t.getMonth()+1;
         var day = t.getUTCDate() < 10 ? '0' + t.getUTCDate() : t.getUTCDate();
@@ -8,12 +8,12 @@ var utl = {
         var m = t.getMinutes() < 10 ? '0' + t.getMinutes() : t.getMinutes();
         var i = t.getSeconds() < 10 ? '0' + t.getSeconds() : t.getSeconds();
 
-        fomal = fomal.replace(/y+/g,year);
-        fomal = fomal.replace(/m+/g,month);
-        fomal = fomal.replace(/d+/g,day);
-        fomal = fomal.replace(/h+/g,h);
-        fomal = fomal.replace(/m+/g,m);
-        fomal = fomal.replace(/i+/g,i);
+        fomal = fomal.replace(/[yY]+/g,year);
+        fomal = fomal.replace(/[mM]+/g,month);
+        fomal = fomal.replace(/[dD]+/g,day);
+        fomal = fomal.replace(/[hH]+/g,h);
+        fomal = fomal.replace(/[sS]+/g,m);
+        fomal = fomal.replace(/[iI]+/g,i);
         return fomal;
     }
 }

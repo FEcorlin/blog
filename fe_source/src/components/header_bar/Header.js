@@ -1,4 +1,7 @@
 import React,{ Component } from 'react';
+import {
+	NavLink,Link
+} from 'react-router-dom'
 import './header.less';
 
 export default class Header extends Component{
@@ -13,10 +16,10 @@ export default class Header extends Component{
 					<img alt="NOTE" src="" />
 				</a>
 				<div className="container">
-					<a href="" className="menu active">
+					<NavLink to='/' className="menu" activeClassName="active">
 						<i className="fa fa-bandcamp"></i>
 						<span>首页</span>
-					</a>
+					</NavLink>
 					<a href="" className="menu">
 						<i className="fa fa-bandcamp"></i>
 						<span>其他</span>
@@ -30,12 +33,12 @@ export default class Header extends Component{
 						<button className="fa fa-search"></button>
 					</form>
 				</div>
-				<a className="write_btn" target="_blank" href="">
+				<NavLink className="write_btn" to="/write">
 					<i className="fa fa-leaf"></i>写文章
-				</a>
-				<a className="login_btn" target="_blank" href="">
+				</NavLink>
+				<Link className="login_btn" to="/login">
 					登录
-				</a>
+				</Link>
 				<a className="regist_btn" target="_blank" href="">
 					注册
 				</a>
