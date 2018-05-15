@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<button v-click="add">+</button>
+<button v-click="reduce">-</button>
+
+<span v-bind="num"></span>
+<span v-bind="time"></span>
+
+
+
+<script>
+
+var vue = {
+    add: function () {
+        this.num++;
+    },
+    reduce: function () {
+        this.num--;
+    },
+    num:0,
+    time:'15:47'
+}
+
+var _bind = function () {
+    var list = document.querySelectorAll('[v-click]');
+    for(var i = 0; i < list.length; i++){
+        var name = list[i].getAttribute('v-click');
+        (function (index,name) {
+            list[index].addEventListener('click', function () {
+                vue[name]();
+                _apply();
+            });
+        })(i,name);
+    }
+}
+var _apply = function () {
+    var list = document.querySelectorAll('[v-bind]');
+    for(var i = 0; i < list.length; i++){
+        var name = list[i].getAttribute('v-bind');
+        list[i].innerHTML = vue[name];
+    }
+}
+_bind();
+_apply();
+
+</script>
+</body>
+</html>
